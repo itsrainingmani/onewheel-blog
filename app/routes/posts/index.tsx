@@ -1,22 +1,19 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
+import { json, LoaderFunction } from "@remix-run/node";
+import { getPosts } from "~/models/post.server";
 
-export const loader = async () => {
-  const posts = [
-    {
-      slug: "my-first-post",
-      title: "My First Post!",
-    },
-    {
-      slug: "trail-riding-with-onewheel",
-      title: "Trail Riding with Onewheel!",
-    },
-  ];
+// LoaderData is a new type of a promise that contains the return type of the getPosts function
+type LoaderData = {
+  posts: Awaited<ReturnType<typeof getPosts>>;
+};
+
+export const loader: LoaderFunction = async () => {
+  const posts = await getPosts();
   return json({ posts });
 };
 
 export default function PostsRoute() {
-  const { posts } = useLoaderData();
+  const { posts } = useLoaderData() as LoaderData;
   return (
     <main>
       <h1>Posts</h1>
