@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { getPostListings, getPosts } from "~/models/post.server";
+import { getPostListings } from "~/models/post.server";
 
 // LoaderData is a new type of a promise that contains the return type of the getPosts function
 type LoaderData = {
